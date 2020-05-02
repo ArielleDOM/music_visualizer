@@ -69,7 +69,7 @@ function play() {
     var icosahedronGeometry = new THREE.IcosahedronGeometry(10, 4);
     
     var lambertMaterial = new THREE.MeshLambertMaterial({
-        color: 0xcf7d13,
+        color: 0xFFD700,
         envMapIntensity: 1, 
         roughness: 0.125, 
         metallness: 1,
