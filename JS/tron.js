@@ -50,12 +50,12 @@ function play() {
 
     const loader = new THREE.CubeTextureLoader();
     const cmtexture = loader.load([
-        'space/front.png',
-        'space/back.png',
-        'space/top.png',
-        'space/bot.png',
-        'space/left.png',
-        'space/right.png',
+        '../space/front.png',
+        '../space/back.png',
+        '../space/top.png',
+        '../space/bot.png',
+        '../space/left.png',
+        '../space/right.png',
     ]);
     scene.background = cmtexture;
 
@@ -67,9 +67,9 @@ function play() {
     renderer.setSize(window.innerWidth, window.innerHeight);
 
     var icosahedronGeometry = new THREE.IcosahedronGeometry(10, 4);
+    
     var lambertMaterial = new THREE.MeshLambertMaterial({
-        color: 0xd3d3d3,
-        envMap: cmtexture,
+        color: 0xcf7d13,
         envMapIntensity: 1, 
         roughness: 0.125, 
         metallness: 1,
@@ -80,27 +80,46 @@ function play() {
         color: 0xFDB813,
         roughness: 0.125, 
         metallness: 1,
-        // wireframe: true
+        wireframe: true
     });
     
+    function sizePlanet (width, height, depth){
+        return new THREE.SphereGeometry(width, height, depth);
+    }
 
-    const boxWidth = 1;
-    const boxHeight = 1;
-    const boxDepth = 1;
-    const colorC = 0xffffff
-    const material = new THREE.MeshPhongMaterial({colorC, envMap: cmtexture, envMapIntensity: 1, roughness: 0.125, metallness: 1 });
-    const geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth);
-    const cube = new THREE.Mesh(geometry, material);
-    group.add(cube)
+    function makeInstance(geometry, color, x, y, z) {
+    
+    const material = new THREE.MeshPhongMaterial({color, roughness: .2, metallness: 1 });
+
+    const planet = new THREE.Mesh(geometry, material);
+    scene.add(planet);
+
+    planet.position.x = x;
+    planet.position.y = y;
+    planet.position.z = z;
+
+    return planet;
+  }
+
+  const planets = [
+    makeInstance(sizePlanet(1, 32, 32), 0xcccccc,  0, 0, 30),
+    makeInstance(sizePlanet(1.5, 32, 32), 0xFF4500,  5, 0, 40),
+    makeInstance(sizePlanet(1.75, 32, 32), 0x255880,  10, 0, 50),
+    makeInstance(sizePlanet(1.25, 32, 32), 0xba6d36,  15, 0, 60),
+  ];
+    planets.forEach(planet => {
+        group.add(planet)
+    })
     
     
     var sun = new THREE.Mesh(icosahedronGeometry, sunLambertMaterial);
     sun.position.set(0, 0, 0);
     group.add(sun);
 
-    var newBall = new THREE.Mesh(icosahedronGeometry, lambertMaterial);
-    newBall.position.set(50, 1, 3);
-    group.add(newBall);
+    var insideSun = new THREE.Mesh(icosahedronGeometry, lambertMaterial);
+    insideSun.position.set(0, 0, 0);
+    group.add(insideSun);
+
 
     var ambientLight = new THREE.AmbientLight(0xffffff);
     scene.add(ambientLight);
@@ -157,25 +176,12 @@ function play() {
     function makeRoughBall(mesh, bassFr, treFr) {
         mesh.geometry.vertices.forEach(function (vertex, i) {
             var offset = mesh.geometry.parameters.radius;
-            var amp = 7;
+            var amp = 5;
             var time = window.performance.now();
             vertex.normalize();
             var rf = 0.00001;
             var distance = (offset + bassFr ) + noise.noise3D(vertex.x + time *rf*7, vertex.y +  time*rf*8, vertex.z + time*rf*9) * amp * treFr;
             vertex.multiplyScalar(distance);
-        });
-        mesh.geometry.verticesNeedUpdate = true;
-        mesh.geometry.normalsNeedUpdate = true;
-        mesh.geometry.computeVertexNormals();
-        mesh.geometry.computeFaceNormals();
-    }
-
-    function makeRoughGround(mesh, distortionFr) {
-        mesh.geometry.vertices.forEach(function (vertex, i) {
-            var amp = 2;
-            var time = Date.now();
-            var distance = (noise.noise2D(vertex.x + time * 0.0003, vertex.y + time * 0.0001) + 0) * distortionFr * amp;
-            vertex.z = distance;
         });
         mesh.geometry.verticesNeedUpdate = true;
         mesh.geometry.normalsNeedUpdate = true;
