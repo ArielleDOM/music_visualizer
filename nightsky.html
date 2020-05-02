@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel = "stylesheet" type = "text/css" href = "style.css" />
+    <title>Test World</title>
+
+    <script>
+            const song = new Audio()
+            song.src = "Gimme-Love.mp3"
+    </script>
+</head>
+<body>
+    <script type = "module" src = "nightsky.js"></script>
+    <button type = "button" onClick= "song.play()" >Play</button>
+    
+    <canvas id = "c">
+        <!-- <div id="button_wrapper">
+            <input type="file" name="file" id="file" class="inputfile" onchange="handleFiles(this.files)"/>
+         <label for="file">Choose file</label>
+           <div class="button" id="sample" onclick="playSample()">Play sample file</div>
+        </div> -->
+    </canvas>
+    
+</body>
+</html>

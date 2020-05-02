@@ -1,0 +1,16 @@
+body {
+  margin: 0;
+}
+#c {
+  width: 100vw;
+  height: 100vh;
+  display: block;
+}
+
+button {
+  position: absolute;
+  display: block;
+  z-index: 99;
+  left: 50%;
+  top: 50%;
+}
