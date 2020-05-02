@@ -46,12 +46,12 @@ function main() {
     
     const loader = new THREE.CubeTextureLoader();
     const cmtexture = loader.load([
-      'space/front.png',
-      'space/back.png',
-      'space/top.png',
-      'space/bot.png',
-      'space/left.png',
-      'space/right.png',
+      '../space/front.png',
+      '../space/back.png',
+      '../space/top.png',
+      '../space/bot.png',
+      '../space/left.png',
+      '../space/right.png',
       
     ]);
     scene.background = cmtexture;
