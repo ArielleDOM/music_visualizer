@@ -7,14 +7,14 @@ import {OrbitControls} from 'https://threejsfundamentals.org/threejs/resources/t
 /*Downloaded from https://www.codeseek.co/prakhar625/audio-visualizer-solar-sys-EvEZjL */
 //initialise simplex noise (replace with perlin noise in future if needed)
 //initialise simplex noise instance
-var noise = new SimplexNoise();
+const noise = new SimplexNoise();
 const HIGHLIGHT_COLORS = [0x4200ff, 0x00ffff, 0xff0000, 0xff00ff];
 // the main visualiser function
-var vizInit = function (){
+const vizInit = function (){
   
-  var file = document.getElementById("thefile");
-  var audio = document.getElementById("audio");
-  var fileLabel = document.querySelector("label.file");
+  const file = document.getElementById("thefile");
+  const audio = document.getElementById("audio");
+  const fileLabel = document.querySelector("label.file");
   
   document.onload = function(e){
     console.log(e);
@@ -24,7 +24,7 @@ var vizInit = function (){
   file.onchange = function(){
     fileLabel.classList.add('normal');
     audio.classList.add('active');
-    var files = this.files;
+    const files = this.files;
     
     audio.src = URL.createObjectURL(files[0]);
     audio.load();
@@ -33,18 +33,18 @@ var vizInit = function (){
 }
   
 function play() {
-    var context = new AudioContext();
-    var src = context.createMediaElementSource(audio);
-    var analyser = context.createAnalyser();
+  const context = new AudioContext();
+  const src = context.createMediaElementSource(audio);
+  const analyser = context.createAnalyser();
     src.connect(analyser);
     analyser.connect(context.destination);
     analyser.fftSize = 512;
-    var bufferLength = analyser.frequencyBinCount;
-    var dataArray = new Uint8Array(bufferLength);
+    const bufferLength = analyser.frequencyBinCount;
+    const dataArray = new Uint8Array(bufferLength);
 
     //here comes the webgl
-    var scene = new THREE.Scene();
-    var group = new THREE.Group();
+    const scene = new THREE.Scene();
+    const group = new THREE.Group();
     const fov = 75;
     const aspect = 2;  // the canvas default
     const near = 0.1;
@@ -67,18 +67,18 @@ function play() {
     controls.target.set(0, 0, 0);
     controls.update();
 
-    var renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
 
-    var planeGeometry = new THREE.PlaneGeometry(800, 800, 100, 100);
-    var planeMaterial = new THREE.MeshLambertMaterial({
+    const planeGeometry = new THREE.PlaneGeometry(800, 800, 100, 100);
+    const planeMaterial = new THREE.MeshLambertMaterial({
         color: 0x6904ce,
         envMap: cmtexture,
         envMapIntensity: .5,
         side: THREE.DoubleSide,
         // wireframe: true
     });
-    var plane2Material = new THREE.MeshLambertMaterial({
+    const plane2Material = new THREE.MeshLambertMaterial({
       color: 0xffffff,
       // envMap: cmtexture,
       envMapIntensity: 1,
@@ -86,42 +86,42 @@ function play() {
       wireframe: true
   });
     
-    // var plane = new THREE.Mesh(planeGeometry, planeMaterial);
+    // const plane = new THREE.Mesh(planeGeometry, planeMaterial);
     // plane.rotation.x = -0.5 * Math.PI;
     // plane.position.set(0, 30, 0);
     // group.add(plane);
 
-    var plane = new THREE.Mesh(planeGeometry, plane2Material);
+    const plane = new THREE.Mesh(planeGeometry, plane2Material);
     plane.rotation.x = -0.5 * Math.PI;
     plane.position.set(0, -50, 0);
     group.add(plane);
     
-    var plane2 = new THREE.Mesh(planeGeometry, planeMaterial);
+    const plane2 = new THREE.Mesh(planeGeometry, planeMaterial);
     plane2.rotation.x = -0.5 * Math.PI;
     plane2.position.set(0, -50, 0);
     group.add(plane2);
 
-    var icosahedronGeometry = new THREE.IcosahedronGeometry(10, 4);
-    var lambertMaterial = new THREE.MeshLambertMaterial({
+    const icosahedronGeometry = new THREE.IcosahedronGeometry(10, 4);
+    const lambertMaterial = new THREE.MeshLambertMaterial({
         color: 0xff00ee,
         wireframe: true
     });
 
-    // var ball = new THREE.Mesh(icosahedronGeometry, lambertMaterial);
+    // const ball = new THREE.Mesh(icosahedronGeometry, lambertMaterial);
     // ball.position.set(0, 0, 0);
     // group.add(ball);
 
-    var ambientLight = new THREE.AmbientLight(0xaaaaaa);
+    const ambientLight = new THREE.AmbientLight(0xaaaaaa);
     scene.add(ambientLight);
 
-    var spotLight = new THREE.SpotLight(0xffffff);
+    const spotLight = new THREE.SpotLight(0xffffff);
     spotLight.intensity = 0.9;
     spotLight.position.set(-10, 40, 20);
     spotLight.lookAt(plane2);
     spotLight.castShadow = true;
     scene.add(spotLight);
 
-    // var orbitControls = new THREE.OrbitControls(camera);
+    // const orbitControls = new THREE.OrbitControls(camera);
     // orbitControls.autoRotate = true;
     
     scene.add(group);
@@ -135,19 +135,19 @@ function play() {
     function render() {
       analyser.getByteFrequencyData(dataArray);
 
-      var lowerHalfArray = dataArray.slice(0, (dataArray.length/2) - 1);
-      var upperHalfArray = dataArray.slice((dataArray.length/2) - 1, dataArray.length - 1);
+      const lowerHalfArray = dataArray.slice(0, (dataArray.length/2) - 1);
+      const upperHalfArray = dataArray.slice((dataArray.length/2) - 1, dataArray.length - 1);
 
-      var overallAvg = avg(dataArray);
-      var lowerMax = max(lowerHalfArray);
-      var lowerAvg = avg(lowerHalfArray);
-      var upperMax = max(upperHalfArray);
-      var upperAvg = avg(upperHalfArray);
+      const overallAvg = avg(dataArray);
+      const lowerMax = max(lowerHalfArray);
+      const lowerAvg = avg(lowerHalfArray);
+      const upperMax = max(upperHalfArray);
+      const upperAvg = avg(upperHalfArray);
 
-      var lowerMaxFr = lowerMax / lowerHalfArray.length;
-      var lowerAvgFr = lowerAvg / lowerHalfArray.length;
-      var upperMaxFr = upperMax / upperHalfArray.length;
-      var upperAvgFr = upperAvg / upperHalfArray.length;
+      const lowerMaxFr = lowerMax / lowerHalfArray.length;
+      const lowerAvgFr = lowerAvg / lowerHalfArray.length;
+      const upperMaxFr = upperMax / upperHalfArray.length;
+      const upperAvgFr = upperAvg / upperHalfArray.length;
 
       makeRoughGround(plane, modulate(Math.pow(lowerMaxFr, 0.8), 0, 1, 0, 8), modulate(upperAvgFr, 0, 1, 0, 4));
       makeRoughGround(plane2, modulate(Math.pow(lowerMaxFr, 0.8), 0, 1, 0, 8), modulate(upperAvgFr, 0, 1, 0, 4));
@@ -172,12 +172,12 @@ function play() {
 
     function makeRoughBall(mesh, bassFr, treFr) {
         mesh.geometry.vertices.forEach(function (vertex, i) {
-            var offset = mesh.geometry.parameters.radius;
-            var amp = 7;
-            var time = window.performance.now();
+            const offset = mesh.geometry.parameters.radius;
+            const amp = 7;
+            const time = window.performance.now();
             vertex.normalize();
-            var rf = 0.00001;
-            var distance = (offset + bassFr ) + noise.noise3D(vertex.x + time *rf*7, vertex.y +  time*rf*8, vertex.z + time*rf*9) * amp * treFr;
+            const rf = 0.00001;
+            const distance = (offset + bassFr ) + noise.noise3D(vertex.x + time *rf*7, vertex.y +  time*rf*8, vertex.z + time*rf*9) * amp * treFr;
             vertex.multiplyScalar(distance);
         });
         mesh.geometry.verticesNeedUpdate = true;
@@ -188,9 +188,9 @@ function play() {
 
     function makeRoughGround(mesh, distortionFr) {
         mesh.geometry.vertices.forEach(function (vertex, i) {
-            var amp = 2;
-            var time = Date.now();
-            var distance = (noise.noise2D(vertex.x + time * 0.0003, vertex.y + time * 0.0001) + 0) * distortionFr * amp;
+            const amp = 2;
+            const time = Date.now();
+            const distance = (noise.noise2D(vertex.x + time * 0.0003, vertex.y + time * 0.0001) + 0) * distortionFr * amp;
             vertex.z = distance;
         });
         mesh.geometry.verticesNeedUpdate = true;
@@ -216,13 +216,13 @@ function fractionate(val, minVal, maxVal) {
 }
 
 function modulate(val, minVal, maxVal, outMin, outMax) {
-    var fr = fractionate(val, minVal, maxVal);
-    var delta = outMax - outMin;
+    const fr = fractionate(val, minVal, maxVal);
+    const delta = outMax - outMin;
     return outMin + (fr * delta);
 }
 
 function avg(arr){
-    var total = arr.reduce(function(sum, b) { return sum + b; });
+    const total = arr.reduce(function(sum, b) { return sum + b; });
     return (total / arr.length);
 }
 
