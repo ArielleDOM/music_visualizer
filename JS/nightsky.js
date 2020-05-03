@@ -30,7 +30,7 @@ var vizInit = function (){
     audio.load();
     audio.play();
     play();
-  }
+}
   
 function play() {
     var context = new AudioContext();

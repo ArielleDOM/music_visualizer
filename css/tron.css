@@ -1,16 +1,12 @@
-:root{
+/* :root{
   --bgColor : hsla(242, 86%, 6%, 1);
   --bgColorLight : hsla(242, 86%, 24%, 1);
   --textColor : hsla(242, 86%, 88%, 1);
   --textColorDark : hsla(242, 36%, 0%, 1);
-  --paperColor: hsla(242, 86%, 44%, 1);
+  --paperColor: none;
   --paperColorDark: hsla(242, 86%, 34%, 1);
   --shadowColorFaint: hsla(0, 0%, 0%, 0.2);
-}
-
-::selected{
-  color: var(--textColorDark);
-}
+} */
 
 html, body{
   margin: 0;
@@ -18,9 +14,8 @@ html, body{
   overflow: hidden;
   height: 100vh;
   width: 100vw;
-  background: var(--bgColor);
-  background: linear-gradient(135deg, var(--bgColor), var(--bgColorLight));
-  color: var(--textColor);
+  background: #82c3ff;
+  color: white;
   font-family: 'Saira', sans-serif;
   position: relative;
 }
@@ -47,6 +42,7 @@ audio {
 
 audio.active{
   bottom: 10px;
+  background: transparent;
 }
 
 #thefile{
@@ -63,15 +59,31 @@ label.file{
   position: absolute;
   left: 50%;
   top: 50%;
+  outline-style: solid;  
   transform: translate3d(-50%, -50%, 0);
   padding: 1rem 2rem;
   border-radius: 4px;
   
-  background: var(--paperColor);
-  color: var(--textColor);
+  color: white;
   font-size: 1.25em;
   font-weight: 700;
   box-shadow: 0 20px 60px var(--shadowColorFaint);
 
   cursor: pointer;
+}
+
+label.file:hover{
+  transform: translate3d(-50%, -55%, 0);
+}
+
+label.file:active{
+  transform: translate3d(-50%, -45%, 0);
+}
+
+label.file.normal{
+transform: translate3d(10%, 50%, 0);
+padding: 0.2rem 2rem;
+font-size: 1rem;
+top: 0;
+left: 0;
 }
