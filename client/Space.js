@@ -28,7 +28,6 @@ export class Space extends React.Component {
 
 
             <script  src="../JS/tron.js" type = "module"></script>
-            <script  src= "../JS/nightsky.js" type = "module"></script>
       </div>
     )}
 }
